@@ -47,8 +47,10 @@ for i in $(seq 1 15); do
   sleep 1
 done
 
+# Create persistent tmux session
+tmux new-session -d -s main 2>/dev/null || true
 echo "[hollowpoint] Ready. Exec in with: docker exec -it claude-code bash"
-echo "[hollowpoint] Then run: ollama launch claude"
+echo "[hollowpoint] Your shell will auto-attach to the persistent tmux session (Ctrl-b d to detach)"
 
 # Keep container alive
 exec tail -f /dev/null

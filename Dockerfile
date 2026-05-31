@@ -13,7 +13,8 @@ RUN apt-get update -qq && \
       ca-certificates \
       gnupg \
       ripgrep \
-      fd-find && \
+      fd-find \
+      tmux && \
     # GitHub CLI
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
       dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
@@ -30,6 +31,9 @@ RUN apt-get update -qq && \
     # Cleanup
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Auto-attach to the persistent tmux session on every docker exec
+RUN echo '\n[ -z "$TMUX" ] && tmux attach-session -t main 2>/dev/null || true' >> /root/.bashrc
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
