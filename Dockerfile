@@ -27,7 +27,7 @@ RUN apt-get update -qq && \
     # Claude Code (always latest)
     npm install -g @anthropic-ai/claude-code --quiet && \
     # Persist bash history in the mounted config dir; auto-attach to tmux on exec
-    printf '\nexport HISTFILE=/root/.claude/.bash_history\nexport HISTSIZE=10000\nexport HISTFILESIZE=10000\n\n[ -z "$TMUX" ] && { tmux attach-session -t main 2>/dev/null || tmux new-session -s main; }\n' >> /root/.bashrc && \
+    printf '\nexport HISTFILE=/root/.claude/.bash_history\nexport HISTSIZE=10000\nexport HISTFILESIZE=10000\n\n[ -z "$TMUX" ] && exec tmux new-session -A -s main\n' >> /root/.bashrc && \
     # Cleanup
     apt-get clean && \
     npm cache clean --force && \
