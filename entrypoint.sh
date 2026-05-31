@@ -32,7 +32,6 @@ fi
 # Start Ollama server in background
 echo "[hollowpoint] Starting Ollama server..."
 ollama serve > /var/log/ollama.log 2>&1 &
-OLLAMA_PID=$!
 
 # Wait for Ollama to be ready
 echo "[hollowpoint] Waiting for Ollama to be ready..."
@@ -47,8 +46,10 @@ for i in $(seq 1 15); do
   sleep 1
 done
 
+# Create persistent tmux session
+tmux new-session -d -s main 2>/dev/null || true
 echo "[hollowpoint] Ready. Exec in with: docker exec -it claude-code bash"
-echo "[hollowpoint] Then run: ollama launch claude"
+echo "[hollowpoint] Your shell will auto-attach to the persistent tmux session (Ctrl-b d to detach)"
 
 # Keep container alive
 exec tail -f /dev/null
