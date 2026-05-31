@@ -34,6 +34,7 @@ services:
       - GIT_COMMITTER_EMAIL=your@email.com
     volumes:
       - /mnt/Data/appdata/claude-code/config:/root/.claude
+      - /mnt/Data/appdata/claude-code/ollama:/root/.ollama
       - /mnt/Data/appdata/claude-code/projects:/workspace
 ```
 
@@ -60,6 +61,7 @@ ollama launch claude        # interactive model picker
 |Path           |Purpose                                                        |
 |---------------|---------------------------------------------------------------|
 |`/root/.claude`|Claude Code config, MCP servers, session history — persist this|
+|`/root/.ollama`|Ollama models — persist to avoid re-downloading on restart     |
 |`/workspace`   |Your projects — mount repos here                               |
 
 ## Ollama Cloud models
