@@ -12,7 +12,8 @@ RUN apt-get update -qq && \
       gnupg \
       ripgrep \
       fd-find \
-      tmux && \
+      tmux \
+      zstd && \
     # GitHub CLI
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
       dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
