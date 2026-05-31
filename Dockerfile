@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.description="Claude Code + Ollama Cloud — self-
 LABEL org.opencontainers.image.source="https://github.com/YOUR_GITHUB_USER/hollowpoint"
 
 RUN apt-get update -qq && \
-    apt-get install -y -qq --no-install-recommends \
+    apt-get install -y -qq \
       git \
       curl \
       ca-certificates \
@@ -19,7 +19,7 @@ RUN apt-get update -qq && \
     echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main' \
       > /etc/apt/sources.list.d/github-cli.list && \
     apt-get update -qq && \
-    apt-get install -y -qq --no-install-recommends gh && \
+    apt-get install -y -qq gh && \
     # fd is packaged as fdfind on Debian
     ln -s /usr/bin/fdfind /usr/local/bin/fd && \
     # Ollama (always latest)
