@@ -11,7 +11,9 @@ RUN apt-get update -qq && \
       curl \
       zstd \
       ca-certificates \
-      gnupg && \
+      gnupg \
+      ripgrep \
+      fd-find && \
     # GitHub CLI
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
       dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
@@ -19,6 +21,8 @@ RUN apt-get update -qq && \
       > /etc/apt/sources.list.d/github-cli.list && \
     apt-get update -qq && \
     apt-get install -y -qq gh && \
+    # fd is packaged as fdfind on Debian
+    ln -s /usr/bin/fdfind /usr/local/bin/fd && \
     # Ollama (always latest)
     curl -fsSL https://ollama.com/install.sh | sh && \
     # Claude Code (always latest)
