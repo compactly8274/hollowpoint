@@ -1,0 +1,17 @@
+services:
+  claude-code:
+    image: ghcr.io/YOUR_GITHUB_USER/hollowpoint:latest
+    container_name: claude-code
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    environment:
+      - OLLAMA_API_KEY=your_ollama_cloud_api_key
+      - GITHUB_TOKEN=your_github_pat
+      - GIT_AUTHOR_NAME=Phil
+      - GIT_AUTHOR_EMAIL=your@email.com
+      - GIT_COMMITTER_NAME=Phil
+      - GIT_COMMITTER_EMAIL=your@email.com
+    volumes:
+      - /mnt/Data/appdata/claude-code/config:/root/.claude
+      - /mnt/Data/appdata/claude-code/projects:/workspace
