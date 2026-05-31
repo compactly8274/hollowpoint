@@ -8,6 +8,8 @@ A self-contained Docker image that bundles Claude Code and Ollama into a persist
 - **Ollama** (latest) — model runner with cloud model support
 - **GitHub CLI** (`gh`) — push, pull, merge, PR from the terminal
 - **Git** — pre-configured with token auth via env vars
+- **tmux** — persistent sessions; re-execing auto-attaches to where you left off
+- **ripgrep** + **fd** — fast search tools used automatically by Claude Code
 
 The image rebuilds automatically every week via GitHub Actions, so Claude Code and Ollama are always up to date without any manual intervention.
 
@@ -38,12 +40,14 @@ services:
       - /mnt/Data/appdata/claude-code/projects:/workspace
 ```
 
-### 2. Connect via SSH / Termius
+### 2. Connect
 
 ```bash
-docker exec -it claude-code bash
-ollama launch claude        # interactive model picker
+docker exec -it claude-code bash   # auto-attaches to the persistent tmux session
+ollama launch claude               # interactive model picker
 ```
+
+Detach with `Ctrl-b d` — your session keeps running. Re-execing picks it back up.
 
 ## Environment variables
 
@@ -58,11 +62,11 @@ ollama launch claude        # interactive model picker
 
 ## Volumes
 
-|Path           |Purpose                                                        |
-|---------------|---------------------------------------------------------------|
-|`/root/.claude`|Claude Code config, MCP servers, session history — persist this|
-|`/root/.ollama`|Ollama models — persist to avoid re-downloading on restart     |
-|`/workspace`   |Your projects — mount repos here                               |
+|Path           |Purpose                                                                    |
+|---------------|---------------------------------------------------------------------------|
+|`/root/.claude`|Claude Code config, MCP servers, session history, bash history — persist this|
+|`/root/.ollama`|Ollama models — persist to avoid re-downloading on restart                 |
+|`/workspace`   |Your projects — mount repos here                                           |
 
 ## Ollama Cloud models
 

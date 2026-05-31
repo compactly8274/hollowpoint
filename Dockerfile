@@ -32,8 +32,9 @@ RUN apt-get update -qq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Auto-attach to the persistent tmux session on every docker exec
-RUN echo '\n[ -z "$TMUX" ] && tmux attach-session -t main 2>/dev/null || true' >> /root/.bashrc
+COPY tmux.conf /root/.tmux.conf
+
+RUN printf '\n# Persist bash history in the mounted config dir\nexport HISTFILE=/root/.claude/.bash_history\nexport HISTSIZE=10000\nexport HISTFILESIZE=10000\n\n# Auto-attach to persistent tmux session on exec\n[ -z "$TMUX" ] && { tmux attach-session -t main 2>/dev/null || tmux new-session -s main; }\n' >> /root/.bashrc
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
