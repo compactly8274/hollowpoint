@@ -32,7 +32,6 @@ fi
 # Start Ollama server in background
 echo "[hollowpoint] Starting Ollama server..."
 ollama serve > /var/log/ollama.log 2>&1 &
-OLLAMA_PID=$!
 
 # Wait for Ollama to be ready
 echo "[hollowpoint] Waiting for Ollama to be ready..."
